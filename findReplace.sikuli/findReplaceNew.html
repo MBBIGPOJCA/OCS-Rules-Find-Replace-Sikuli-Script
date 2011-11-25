@@ -1,0 +1,188 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }  
+         
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>findReplaceNew.sikuli\findReplaceNew.sikuli</h2> <a href="findReplaceNew.sikuli\findReplaceNew.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="cmt"># Collect input from user on find and replace data
+</span>findString = <span class="str">"18"</span> <span class="cmt">#input('Enter the find string:')</span>
+repString = <span class="str">"22"</span> <span class="cmt">#input('Enter the replacement string:')</span>
+
+<span class="kw">def</span> expEditor():
+    switchApp(<span class="str">"Fuzzy Expert System Editor"</span>)
+    anApp = App(<span class="str">"Fuzzy Expert System Editor"</span>).window()
+    topLeftX = anApp.getX()
+    topLeftY = anApp.getY()
+    setROI(topLeftX + <span class="dig">315</span>,topLeftY + <span class="dig">70</span>, <span class="dig">120</span>, <span class="dig">430</span>)
+
+<span class="kw">def</span> ruleEditor():
+    switchApp(<span class="str">"Edit Statement"</span>)
+    anApp = App(<span class="str">"Edit Statement"</span>).window()
+    setROI(anApp)
+
+<span class="kw">def</span> sortClick():
+    x.sort(<span class="kw">lambda</span> a,b: a.y-b.y)
+    <span class="cmt"># Loop through collection
+</span>    <span class="kw">for</span> item <span class="kw">in</span> x:
+        <span class="cmt"># click and edit
+</span>        <span class="skw">click</span>(item)
+
+<span class="cmt"># Main code to do the find and replace
+</span><span class="kw">def</span> findReplace():
+    <span class="skw">type</span>(<span class="str">'c'</span>, KEY_CTRL)
+    oldText = Env.getClipboard()
+    newText = oldText.replace(findString, repString)
+    <span class="skw">type</span>(newText)
+
+<span class="cmt"># Specific Assertion keystrokes
+</span><span class="kw">def</span> typeAssertion():
+    ruleEditor()
+    <span class="skw">click</span>(Pattern(<img src="1322004321171.png" />).targetOffset(-<span class="dig">57</span>,<span class="dig">0</span>))
+    <span class="kw">if</span> exists(<img src="XAnewasserti.png" />):
+        <span class="skw">click</span>(Pattern(<img src="XAnewasserti.png" />).targetOffset(-<span class="dig">41</span>,<span class="dig">25</span>))
+
+<span class="cmt"># Specific Comparison keystrokes 
+</span><span class="kw">def</span> typeComparison():
+    <span class="skw">type</span>(Key.TAB,KEY_SHIFT)
+    findReplace()
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(Key.TAB)
+    findReplace()
+    ruleEditor()
+    <span class="skw">click</span>(Pattern(<img src="1322004321171.png" />).targetOffset(-<span class="dig">57</span>,<span class="dig">0</span>))
+
+<span class="cmt"># Specific Assignment keystrokes
+</span><span class="kw">def</span> typeAssignment():
+    <span class="skw">type</span>(Key.TAB,KEY_SHIFT)
+    findReplace()
+    <span class="skw">type</span>(Key.TAB)
+    <span class="skw">type</span>(Key.TAB)
+    findReplace()
+    ruleEditor()
+    <span class="skw">click</span>(Pattern(<img src="1322004321171.png" />).targetOffset(-<span class="dig">57</span>,<span class="dig">0</span>))
+
+<span class="cmt">#Assertion
+</span>expEditor()
+<span class="kw">if</span> exists(Pattern(<img src="1321543588117-1.png" />).similar(<span class="dig">0.95</span>)):
+    <span class="cmt"># Make a list of these icons
+</span>    x = list(findAll(Pattern(<img src="1321543588117-1.png" />).similar(<span class="dig">0.95</span>)))
+    x.sort(<span class="kw">lambda</span> a,b: a.y-b.y)
+    <span class="cmt"># Loop through collection
+</span>    <span class="kw">for</span> item <span class="kw">in</span> x:
+        <span class="cmt"># click and edit
+</span>        <span class="skw">click</span>(item)
+        <span class="skw">type</span>(<span class="str">'e'</span>, KEY_ALT)
+        <span class="cmt"># Is this an Assertion? 
+</span>        ruleEditor()
+        <span class="kw">if</span> <span class="skw">find</span>(<img src="QAssertion.png" />).below().exists(<img src="Text.png" />):
+            findReplace()
+            typeAssertion()
+
+<span class="cmt">#Comparison
+</span>expEditor()
+<span class="kw">if</span> exists(Pattern(<img src="1321547477865.png" />).similar(<span class="dig">0.95</span>)):
+    <span class="cmt"># Make a list of these icons
+</span>    x = list(findAll(Pattern(<img src="1321547477865.png" />).similar(<span class="dig">0.95</span>)))
+    x.sort(<span class="kw">lambda</span> a,b: a.y-b.y)
+    <span class="cmt"># Loop through collection
+</span>    <span class="kw">for</span> item <span class="kw">in</span> x:
+        <span class="cmt"># click and edit
+</span>        <span class="skw">click</span>(item)
+        <span class="skw">type</span>(<span class="str">'e'</span>, KEY_ALT)
+        <span class="cmt"># Is this an Comparison? 
+</span>        ruleEditor()
+        <span class="kw">if</span> <span class="skw">find</span>(<img src="EFuzzystatem-1.png" />).below().exists(<img src="Compare.png" />):
+            typeComparison()
+
+<span class="cmt">#Assignment
+</span>expEditor()
+<span class="kw">if</span> exists(Pattern(<img src="1321547612803.png" />).similar(<span class="dig">0.95</span>)):
+    <span class="cmt"># Make a list of these icons
+</span>    x = list(findAll(Pattern(<img src="1321547612803.png" />).similar(<span class="dig">0.95</span>)))
+    x.sort(<span class="kw">lambda</span> a,b: a.y-b.y)
+    <span class="cmt"># Loop through collection
+</span>    <span class="kw">for</span> item <span class="kw">in</span> x:
+        <span class="cmt"># click and edit
+</span>        <span class="skw">click</span>(item)
+        <span class="skw">type</span>(<span class="str">'e'</span>, KEY_ALT)
+        <span class="cmt"># Is this an Assignment? 
+</span>        ruleEditor()
+        <span class="kw">if</span> <span class="skw">find</span>(<img src="QAssertion-1.png" />).below().exists(<img src="Locaoutputob.png" />):
+                <span class="kw">if</span> <span class="skw">find</span>(<img src="Locaoutputob-1.png" />).right().exists(<img src="Assign-1.png" />):
+                    typeAssignment()
+
+                <span class="kw">else</span>:
+                    findReplace()
+                    ruleEditor()
+                    <span class="skw">click</span>(Pattern(<img src="1322004321171.png" />).targetOffset(-<span class="dig">57</span>,<span class="dig">0</span>))
+</pre>
+</body>
+</html>
